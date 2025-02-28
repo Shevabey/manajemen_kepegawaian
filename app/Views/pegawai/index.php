@@ -26,7 +26,8 @@
                         <td><?= $row->telepon ?></td>
                         <td><?= $row->nama_jabatan ?></td>
                         <td>
-                            <form action="/pegawai/delete/<?= $row->id ?>" method="post">
+                            <form action="/pegawai/delete/<?= $row->id ?>" method="post" >
+                                <a href="/pegawai/show/<?= $row->id ?>" class="btn btn-info">Detail</a>
                                 <a href="/pegawai/edit/<?= $row->id ?>" class="btn btn-warning">Edit</a>
                                 <?= csrf_field() ?>
                                 <button type="submit" class="btn btn-danger">Hapus</button>

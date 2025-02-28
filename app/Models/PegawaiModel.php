@@ -12,11 +12,16 @@ class PegawaiModel extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['nama_pegawai', 'jabatan_id', 'alamat', 'telepon'];
+    protected $allowedFields    = ['nama_pegawai', 'jabatan_id', 'alamat', 'telepon', 'foto_pegawai'];
 
     public function getPegawaiWithJabatan()
     {
         return $this->select('pegawai.*, jabatan.nama_jabatan, jabatan.deskripsi_jabatan')
             ->join('jabatan', 'jabatan.id = pegawai.jabatan_id')->findAll();
+    }
+    public function getPegawaiWithJabatanWhere($id)
+    {
+        return $this->select('pegawai.*, jabatan.nama_jabatan, jabatan.deskripsi_jabatan')
+            ->join('jabatan', 'jabatan.id = pegawai.jabatan_id')->find($id);
     }
 }

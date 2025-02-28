@@ -13,9 +13,12 @@ class JabatanController extends BaseController
     protected $modelJabatan;
     public function __construct()
     {
+        if (!session()->get('login')) {
+            redirect()->to('/login')->with('error', 'Login dulu iciboss..')->send();
+            exit;
+        }
         $this->modelJabatan = new JabatanModel();
     }
-
     public function index()
     {
         $data['jabatan'] = $this->modelJabatan->findAll();

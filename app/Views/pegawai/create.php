@@ -7,7 +7,7 @@
         <a href="/pegawai" class="btn btn-dark">Kembali</a>
     </div>
     <div class="pt-3">
-        <form action="/pegawai/store" method="post">
+        <form action="/pegawai/store" method="post" enctype="multipart/form-data">
             <?= csrf_field() ?>
             <div class="mb-3">
                 <label for="" class="form-label">Nama Pegawai:</label>
@@ -29,6 +29,10 @@
                         <option value="<?= $j->id; ?>"><?= $j->nama_jabatan; ?></option>
                     <?php } ?>
                 </select>
+            </div>
+            <div class="mb-3">
+                <label for="" class="form-label">Foto Pegawai</label>
+                <input type="file" name="file_foto" class="form-control">
             </div>
             <button type="submit" class="btn btn-dark">Simpan</button>
         </form>
