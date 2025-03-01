@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\JabatanModel;
-
+use App\Models\PegawaiModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class JabatanController extends BaseController
@@ -43,6 +43,8 @@ class JabatanController extends BaseController
         ];
 
         $this->modelJabatan->save($data);
+        //  membuat flash data
+        session()->setFlashdata('sukses', 'Data jabatan berhasil ditambahkan');
         return redirect()->to('jabatan');
     }
     public function edit($id)
@@ -59,11 +61,23 @@ class JabatanController extends BaseController
         ];
 
         $this->modelJabatan->save($data);
-        return redirect()->to('jabatan');
+        //  membuat flash data cara simple
+        return redirect()->to('jabatan')->with('sukses', 'Data jabatan berhasil diupdate');
     }
     public function delete($id)
     {
+        $modelPegawai = new PegawaiModel();
+        $cekPegawai = $modelPegawai->where('jabatan_id', $id)->countAllResults();
+
+        if($cekPegawai > 0){
+            return redirect()->to('jabatan')->with('gagal', 'Data jabatan tidak dapat dihapus karena digunakan di data pegawai');
+
+        }
+
+        // Proses hapus
         $this->modelJabatan->delete($id);
+        //  membuat flash data
+        session()->setFlashdata('sukses', 'Data jabatan berhasil dihapus');
         return redirect()->to('jabatan');
     }
 }

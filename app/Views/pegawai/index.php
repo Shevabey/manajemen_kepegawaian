@@ -26,11 +26,11 @@
                         <td><?= $row->telepon ?></td>
                         <td><?= $row->nama_jabatan ?></td>
                         <td>
-                            <form action="/pegawai/delete/<?= $row->id ?>" method="post" >
+                            <form action="/pegawai/delete/<?= $row->id ?>" method="post" class="form-hapus">
                                 <a href="/pegawai/show/<?= $row->id ?>" class="btn btn-info">Detail</a>
                                 <a href="/pegawai/edit/<?= $row->id ?>" class="btn btn-warning">Edit</a>
                                 <?= csrf_field() ?>
-                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                <button type="button" class="btn btn-danger" onclick="konfirmasi(this)">Hapus</button>
                             </form>
                         </td>
                     </tr>
@@ -39,4 +39,33 @@
         </table>
     </div>
 </div>
+<?= $this->endSection(); ?>
+
+<?= $this->section('costum_js'); ?>
+<script>
+    <?php if(session()->getFlashdata('swal_icon')):?>
+    Swal.fire({
+        title: "<?= session()->getFlashdata('swal_title') ?>",
+        text: "<?= session()->getFlashdata('swal_text') ?>",
+        icon: "<?= session()->getFlashdata('swal_icon') ?>"
+    });
+    <?php endif;?>
+
+    function konfirmasi(button){
+        const form = button.closest('.form-hapus')
+        Swal.fire({
+        title: "Apakah anda yakin?",
+        text: "Menghapus data ini tidak akan kembali",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, hapus saja"
+}).then((result) => {
+  if (result.isConfirmed) {
+    form.submit();
+  }
+});
+    }
+</script>
 <?= $this->endSection(); ?>

@@ -51,6 +51,12 @@ class PegawaiController extends BaseController
         }
 
         $this->modelPegawai->save($data);
+        session()->setFlashdata([
+            'swal_icon' => 'success',
+            'swal_title' => 'Sukses Membuat!',
+            'swal_text' => 'Data pegawai berhasil ditambahkan.'
+
+        ]);
         return redirect()->to('pegawai');
     }
     public function edit($id)
@@ -70,8 +76,8 @@ class PegawaiController extends BaseController
             'jabatan_id' => $this->request->getPost('jabatan_id'),
 
         ];
-            // Ambil foto lama
-            $fotoLama = $this->request->getPost('foto_lama');
+        // Ambil foto lama
+        $fotoLama = $this->request->getPost('foto_lama');
 
         // menghandle foto
         $fileFoto = $this->request->getFile('file_foto');
@@ -91,6 +97,12 @@ class PegawaiController extends BaseController
         }
 
         $this->modelPegawai->save($data);
+        session()->setFlashdata([
+            'swal_icon' => 'success',
+            'swal_title' => 'Sukses Update!',
+            'swal_text' => 'Data pegawai berhasil diupdate.'
+
+        ]);
         return redirect()->to('pegawai');
     }
     public function delete($id)
@@ -106,6 +118,12 @@ class PegawaiController extends BaseController
             }
             $this->modelPegawai->delete($id);
         }
+        session()->setFlashdata([
+            'swal_icon' => 'success',
+            'swal_title' => 'Sukses!',
+            'swal_text' => 'Data pegawai berhasil dihapus.'
+
+        ]);
         return redirect()->to('pegawai');
     }
 }

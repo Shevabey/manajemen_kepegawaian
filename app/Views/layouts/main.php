@@ -24,7 +24,7 @@
     <?= $this->include('layouts/navbar'); ?>
 
     <div class="container py-5">
-        <?= $this->renderSection('content') ?>
+    <?= $this->renderSection('content') ?>
     </div>
 
     <footer class="footer mt-auto py-3 bg-secondary">
@@ -34,8 +34,9 @@
     </footer>
 
 
-
-    <script src="/public/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <?= $this->renderSection('costum_js') ?>
 </body>
 
 </html>

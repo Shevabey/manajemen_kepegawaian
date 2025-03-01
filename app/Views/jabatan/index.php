@@ -7,6 +7,16 @@
         <a href="/jabatan/create" class="btn btn-dark">Tambah Data</a>
     </div>
     <div class="pt-3">
+        <?php if(session()->getFlashdata('sukses')): ?>
+            <div class="alert alert-success">
+                <?php echo session()->getFlashdata('sukses')?>
+            </div>
+        <?php endif; ?>
+        <?php if(session()->getFlashdata('gagal')): ?>
+            <div class="alert alert-danger">
+                <?php echo session()->getFlashdata('gagal')?>
+            </div>
+        <?php endif; ?>
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
