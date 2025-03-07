@@ -36,6 +36,49 @@ class PegawaiController extends BaseController
     }
     public function store()
     {
+        // rule
+        $rules = [
+            'nama_pegawai' => 'required',
+            'alamat' => 'required',
+            'telepon' => 'required',
+            'jabatan_id' => 'required|numeric',
+            'file_foto' => 'uploaded[file_foto]|is_image[file_foto]|mime_in[file_foto,image/jpg,image/png,image/jpeg]|max_size[file_foto, 1024]',
+        ];
+
+        $errors = [
+            'nama_pegawai' => [
+                'required'  => 'Nama Pegawai wajib diisi.',
+
+            ],
+            'alamat' => [
+                'required'  => 'Alamat Pegawai wajib diisi.',
+
+            ],
+            'telepon' => [
+                'required'  => 'Telepon Pegawai wajib diisi.',
+
+            ],
+            'jabatan_id' => [
+                'required'  => 'Jabatan Pegawai wajib diisi.',
+                'numeric' => 'Id Jabatan wajib angka'
+
+            ],
+            'file_foto' => [
+                'uploaded'  => 'Foto Pegawai wajib diupload.',
+                'is_image' => 'Foto Pegawai harus gambar',
+                'mime_in' => 'Foto Pegawai harus JPG, JPEG, atau PNG',
+                'max_size' => 'Foto Pegawai tidak boleh lebih dari 1MB'
+
+            ],
+        ];
+
+        // Aturan validasi
+        $valData = $this->validate($rules, $errors);
+
+        if (!$valData) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
         $data = [
             'nama_pegawai' => $this->request->getPost('nama_pegawai'),
             'alamat' => $this->request->getPost('alamat'),
@@ -68,6 +111,51 @@ class PegawaiController extends BaseController
     }
     public function update($id)
     {
+        
+        // rule
+        $rules = [
+            'nama_pegawai' => 'required',
+            'alamat' => 'required',
+            'telepon' => 'required',
+            'jabatan_id' => 'required|numeric',
+            'file_foto' => 'uploaded[file_foto]|is_image[file_foto]|mime_in[file_foto,image/jpg,image/png,image/jpeg]|max_size[file_foto, 1024]',
+        ];
+
+        $errors = [
+            'nama_pegawai' => [
+                'required'  => 'Nama Pegawai wajib diisi.',
+
+            ],
+            'alamat' => [
+                'required'  => 'Alamat Pegawai wajib diisi.',
+
+            ],
+            'telepon' => [
+                'required'  => 'Telepon Pegawai wajib diisi.',
+
+            ],
+            'jabatan_id' => [
+                'required'  => 'Jabatan Pegawai wajib diisi.',
+                'numeric' => 'Id Jabatan wajib angka'
+
+            ],
+            'file_foto' => [
+                'uploaded'  => 'Foto Pegawai wajib diupload.',
+                'is_image' => 'Foto Pegawai harus gambar',
+                'mime_in' => 'Foto Pegawai harus JPG, JPEG, atau PNG',
+                'max_size' => 'Foto Pegawai tidak boleh lebih dari 1MB'
+
+            ],
+        ];
+
+        // Aturan validasi
+        $valData = $this->validate($rules, $errors);
+
+        if (!$valData) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+
         $data = [
             'id' => $id,
             'nama_pegawai' => $this->request->getPost('nama_pegawai'),

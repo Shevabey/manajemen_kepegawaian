@@ -36,17 +36,40 @@ class JabatanController extends BaseController
     }
     public function store()
     {
+        // rule
+        $rules = [
+            'nama_jabatan' => 'required',
+            'deskripsi_jabatan' => 'required',
+        ];
+
+        $errors = [
+            'nama_jabatan' => [
+                'required'  => 'Nama Jabatan wajib diisi.',
+
+            ],
+            'deskripsi_jabatan' => [
+                'required'  => 'Deskripsi Jabatan wajib diisi.',
+
+            ],
+        ];
+
+        // Aturan validasi
+        $valData = $this->validate($rules, $errors);
+
+        if (!$valData) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
         $data = [
             'nama_jabatan' => $this->request->getPost('nama_jabatan'),
             'deskripsi_jabatan' => $this->request->getPost('deskripsi_jabatan'),
-
         ];
 
         $this->modelJabatan->save($data);
-        //  membuat flash data
         session()->setFlashdata('sukses', 'Data jabatan berhasil ditambahkan');
         return redirect()->to('jabatan');
     }
+
     public function edit($id)
     {
         $data['jabatan'] =  $this->modelJabatan->find($id);
@@ -54,6 +77,32 @@ class JabatanController extends BaseController
     }
     public function update($id)
     {
+        // rule
+        $rules = [
+            'nama_jabatan' => 'required',
+            'deskripsi_jabatan' => 'required',
+        ];
+
+        $errors = [
+            'nama_jabatan' => [
+                'required'  => 'Nama Jabatan wajib diisi.',
+
+            ],
+            'deskripsi_jabatan' => [
+                'required'  => 'Deskripsi Jabatan wajib diisi.',
+
+            ],
+        ];
+
+        // Aturan validasi
+        $valData = $this->validate($rules, $errors);
+
+
+
+        if (!$valData) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
         $data = [
             'id' => $id,
             'nama_jabatan' => $this->request->getPost('nama_jabatan'),
@@ -69,9 +118,8 @@ class JabatanController extends BaseController
         $modelPegawai = new PegawaiModel();
         $cekPegawai = $modelPegawai->where('jabatan_id', $id)->countAllResults();
 
-        if($cekPegawai > 0){
+        if ($cekPegawai > 0) {
             return redirect()->to('jabatan')->with('gagal', 'Data jabatan tidak dapat dihapus karena digunakan di data pegawai');
-
         }
 
         // Proses hapus

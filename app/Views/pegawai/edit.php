@@ -11,15 +11,24 @@
             <?= csrf_field() ?>
             <div class="mb-3">
                 <label for="" class="form-label">Nama Pegawai:</label>
-                <input type="text" class="form-control" name="nama_pegawai" value="<?= $pegawai->nama_pegawai ?>">
+                <input type="text" class="form-control <?= session('errors')['nama_pegawai'] ?? false ? 'is-invalid' : '' ?>" name="nama_pegawai" name="nama_pegawai" value="<?= $pegawai->nama_pegawai ?>">
+                <div class="invalid-feedback">
+                    <?= session('errors')['nama_pegawai'] ?? '' ?>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">Alamat Pegawai:</label>
-                <input type="text" class="form-control" name="alamat" value="<?= $pegawai->alamat ?>">
+                <input type="text" class="form-control <?= session('errors')['alamat'] ?? false ? 'is-invalid' : '' ?>" name="alamat" value="<?= $pegawai->alamat ?>">
+                <div class="invalid-feedback">
+                    <?= session('errors')['alamat'] ?? '' ?>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">No. Telepon:</label>
-                <input type="text" class="form-control" name="telepon" value="<?= $pegawai->telepon ?>">
+                <input type="text" class="form-control <?= session('errors')['telepon'] ?? false ? 'is-invalid' : '' ?>" name="telepon" value="<?= $pegawai->telepon ?>">
+                <div class="invalid-feedback">
+                    <?= session('errors')['telepon'] ?? '' ?>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">Jabatan:</label>
@@ -29,6 +38,9 @@
                         <option value="<?= $j->id; ?>" <?= ($j->id == $pegawai->jabatan_id) ? 'selected' : '' ?>><?= $j->nama_jabatan; ?></option>
                     <?php } ?>
                 </select>
+                <div class="invalid-feedback">
+                    <?= session('errors')['jabatan_id'] ?? '' ?>
+                </div>
             </div>
             <div class="md-3">
                 <label for="" class="form-label">Foto Pegawai</label>
@@ -37,7 +49,10 @@
                         <img src="<?= site_url() ?>uploads/<?= $pegawai->foto_pegawai ?>" alt="foto pegawai" class="img-thumbnail" width="90">
                     </div>
                 <?php endif ?>
-                <input type="file" name="file_foto" class="form-control">
+                <input type="file" name="file_foto" class="form-control <?= session('errors')['file_foto'] ?? false ? 'is-invalid' : '' ?>">
+                <div class="invalid-feedback">
+                    <?= session('errors')['file_foto'] ?? '' ?>
+                </div>
             </div>
             <input type="hidden" name="foto_lama" value="<?= $pegawai->foto_pegawai; ?>">
             <button type="submit" class="btn btn-dark">Update</button>
